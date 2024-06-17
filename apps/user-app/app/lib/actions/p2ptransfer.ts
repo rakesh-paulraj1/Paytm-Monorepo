@@ -1,8 +1,8 @@
-"use client"
+"use server"
 import { getServerSession } from "next-auth";
-import { AuthOptions } from "next-auth";
-import prisma from "@repo/db/client";
 import { authOptions } from "../auth";
+import prisma from "@repo/db/client";
+
 
 
 export async function p2ptransfer(to:string,amount:number) {
@@ -23,9 +23,11 @@ export async function p2ptransfer(to:string,amount:number) {
       error:"The sender does not exist does not exist"
     }
   }
-  await prsima.$transactions(async(tx)=>{
+  await prisma.$transaction(async(tx)=>{
+    await tx.$queryRaw`SELECT * FROM "BALANCE" WHERE "userId"=${Number(from)} FOR UPDATE`;
+    //THE ABOVE LINE WILL LOCK THIS TRANSACTION THAT RUNS ONLY IN SEQUENTIAL MANNER
     const frombalance=await tx.balance.findUnique({
-        where:{userid:Number(from)}
+        where:{userId:Number(from)}
     });
     if(!frombalance|| frombalance.amount<amount){
       return {
@@ -33,13 +35,21 @@ export async function p2ptransfer(to:string,amount:number) {
       }
     }
     await tx.balance.update({
-        where:{userid:Number(from)},
+        where:{userId:Number(from)}, 
         data:{amount:{decrement:amount}}
     })
     await tx.balance.update({
-        where:{userid:touser.id},
+        where:{userId:touser.id},
         data:{amount:{increment:amount }}
     });
+    await tx.p2pTransfer.create({
+      data: {
+        fromUserId:from,
+        toUserId:touser.id,
+        amount,
+        timestamp:new Date()
+      }
+    })
 })
 
 }
