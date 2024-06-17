@@ -24,7 +24,7 @@ export async function p2ptransfer(to:string,amount:number) {
     }
   }
   await prisma.$transaction(async(tx)=>{
-    await tx.$queryRaw`SELECT * FROM "BALANCE" WHERE "userId"=${Number(from)} FOR UPDATE`;
+    await tx.$queryRaw`SELECT * FROM "Balance" WHERE "userId"=${Number(from)} FOR UPDATE`;
     //THE ABOVE LINE WILL LOCK THIS TRANSACTION THAT RUNS ONLY IN SEQUENTIAL MANNER
     const frombalance=await tx.balance.findUnique({
         where:{userId:Number(from)}
@@ -44,8 +44,8 @@ export async function p2ptransfer(to:string,amount:number) {
     });
     await tx.p2pTransfer.create({
       data: {
-        fromUserId:from,
-        toUserId:touser.id,
+        fromUserId:Number(from),
+        toUserId:Number(touser.id),
         amount,
         timestamp:new Date()
       }
