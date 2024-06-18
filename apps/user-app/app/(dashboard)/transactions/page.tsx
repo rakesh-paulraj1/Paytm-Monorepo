@@ -22,7 +22,7 @@ async function getp2ptransactions(): Promise<any[]> { // Changed return type to 
     },
   });
 
-  return recievedtransactions.map((t) => ({
+  return recievedtransactions.map((t:any) => ({
     time: t.timestamp,
     amount: t.amount,
     fromuser: t.fromUser.name,
@@ -46,7 +46,7 @@ async function getp2psent(): Promise<any[]> { // Changed return type to any[]
     },
   });
 
-  return senttransactions.map((t) => ({
+  return senttransactions.map((t:any) => ({
     time: t.timestamp,
     amount: t.amount,
     toUser: t.toUser.name,
