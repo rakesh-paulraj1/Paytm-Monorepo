@@ -1,3 +1,5 @@
+
+
 import { getServerSession } from "next-auth"
 import { authOptions } from "../../lib/auth"
 import prisma from "@repo/db/client";
@@ -12,7 +14,8 @@ async function getp2ptransactions(){
           fromUser:true
         }
     });
-    return recievedtransactions.map(t=>({
+    return recievedtransactions.map((t=>({
+        // @ts-ignore:
         time:t.timestamp,
         amount:t.amount,
         fromuser:t.fromUser.name
