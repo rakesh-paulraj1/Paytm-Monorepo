@@ -1,9 +1,9 @@
-name: Build on PR
+name: Building for pr 
 
 on:
   pull_request:
     branches:
-      - migration156+
+      - migration
 
 jobs:
   build:
