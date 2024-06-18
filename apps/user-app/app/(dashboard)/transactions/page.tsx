@@ -1,4 +1,14 @@
-
+interface Transaction {
+    timestamp: Date;
+    amount: number;
+    fromUser: {
+        name: string;
+    };
+    toUser: {
+        name: string;
+    };
+    // Add other properties as needed
+}
 
 import { getServerSession } from "next-auth"
 import { authOptions } from "../../lib/auth"
@@ -14,8 +24,8 @@ async function getp2ptransactions(){
           fromUser:true
         }
     });
-    return recievedtransactions.map((t=>({
-        // @ts-ignore:
+    return recievedtransactions.map(t=>({
+        //@ts-ignore
         time:t.timestamp,
         amount:t.amount,
         fromuser:t.fromUser.name
