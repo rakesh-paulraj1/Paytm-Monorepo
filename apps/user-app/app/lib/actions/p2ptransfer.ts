@@ -23,7 +23,7 @@ export async function p2ptransfer(to:string,amount:number) {
       error:"The sender does not exist does not exist"
     }
   }
-  await prisma.$transaction(async(tx)=>{
+  await prisma.$transaction(async(tx:any)=>{
     await tx.$queryRaw`SELECT * FROM "Balance" WHERE "userId"=${Number(from)} FOR UPDATE`;
     //THE ABOVE LINE WILL LOCK THIS TRANSACTION THAT RUNS ONLY IN SEQUENTIAL MANNER
     const frombalance=await tx.balance.findUnique({
