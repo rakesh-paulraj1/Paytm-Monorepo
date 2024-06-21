@@ -40,5 +40,4 @@ jobs:
           sudo docker pull rakeshpaulraj/paytm:latest
           sudo docker stop web-app || true
           sudo docker rm web-app || true
-          sudo docker run -d --name web-app -p 3005:3000 rakeshpaulraj/paytm:latest
-           docker run -d --name web-app -p 3001:3000 -e DATABASE_URL=${{secrets.DATABASEURL}} -e JWT_SECRET=${{secrets.JWTSECRET}} -e NEXTAUTH_URL=${{secrets.NEXTAUTHURL}} rakeshpaulraj/paytm:latest
+          sudo docker run -d --name web-app -p 3001:3000 -e DATABASE_URL=${{secrets.DATABASEURL}} -e JWT_SECRET=${{secrets.JWTSECRET}} -e NEXTAUTH_URL=${{secrets.NEXTAUTHURL}} rakeshpaulraj/paytm:latest
