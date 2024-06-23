@@ -1,11 +1,13 @@
+"use client"
 import { SidebarItem } from "../../components/SidebarItem";
 import { AppbarClient } from "../../components/AppbarClient";
-export default function Layout({
+export default function  Layout({
   children,
 }: {
   children: React.ReactNode;
 }): JSX.Element {
-  return (<div>
+
+   return (<div>
         <div className="min-w-screen min-h-screen bg-[#ebe6e6]">
         <AppbarClient />
     <div className="flex"> 

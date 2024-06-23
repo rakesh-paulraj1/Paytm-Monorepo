@@ -1,15 +1,12 @@
-import { getServerSession } from "next-auth"
-import { authOptions } from "../../lib/auth"
+"use-client"
+import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
-export default function() {
-    const session=getServerSession(authOptions);
-    
-            if(!session)  {
-                redirect('/login');
-                return <div>
-                    Please login
-                </div>
-            }
+import { authOptions } from "../../lib/auth";
+export default async  function() {
+    const session = await getServerSession(authOptions);
+    if(!session) {
+        redirect('/login')
+    }   
      return <div>
         Dashboard whatt
 

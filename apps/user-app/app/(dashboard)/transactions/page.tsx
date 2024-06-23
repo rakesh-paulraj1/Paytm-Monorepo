@@ -14,6 +14,7 @@ async function getp2ptransactions(){
         where:{
             toUserId:Number(session?.user?.id)
         },include:{
+            
           fromUser:true
         }
     });
